@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jornada da Graça: Um Recomeço</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Chosen Palette: Serene Dawn -->
+    <!-- Application Structure Plan: A aplicação foi estruturada como uma jornada narrativa em uma única página com rolagem vertical. Em vez de um layout de dashboard, que não se aplica a este conteúdo qualitativo, optei por uma sequência de seções temáticas que espelham a progressão do panfleto: 1. O Questionamento (Hero), 2. O Peso do Passado (Cartões interativos), 3. A Definição da Graça (Ponto de virada), 4. Os Benefícios (Acordeão interativo), 5. O Caminho (Guia passo-a-passo) e 6. O Convite (CTA final). Essa estrutura foi escolhida para transformar a leitura passiva em uma experiência de descoberta ativa, onde o usuário controla o ritmo e interage com os conceitos-chave, melhorando a compreensão e o engajamento com a mensagem central. -->
+    <!-- Visualization & Content Choices: Informação: Texto do panfleto. -> Objetivo: Apresentar conceitos de forma digerível e interativa. -> Método de Apresentação: Seções de conteúdo distintas com elementos de UI interativos. -> Interação: Rolagem, clique em cartões de acordeão. -> Justificativa: A ausência de dados quantitativos exige foco na apresentação de texto. O acordeão para os "benefícios" e os cartões para os "pesos" quebram grandes blocos de texto, permitindo que o usuário explore cada ponto individualmente, o que melhora a retenção e a clareza. A estrutura passo-a-passo para "o caminho" torna o chamado à ação claro e sequencial. -> Biblioteca/Método: HTML/CSS (Tailwind) e Vanilla JavaScript. -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <style>
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes titleReveal {
+            0% { transform: translateY(100%); opacity: 0; }
+            100% { transform: translateY(0); opacity: 1; }
+        }
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0) rotate(-45deg); }
+            40% { transform: translateY(-15px) rotate(-45deg); }
+            60% { transform: translateY(-7px) rotate(-45deg); }
+        }
+        @keyframes blink-caret {
+            from, to { border-color: transparent }
+            50% { border-color: #B38B6D; }
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            color: #4A4A4A;
+            background: linear-gradient(135deg, #FDFBF8, #F8F6F2, #EAE3D9);
+            background-size: 600% 600%;
+            animation: gradientBG 20s ease infinite;
+            overflow-x: hidden;
+        }
+        
+        .bg-accent-fixed { 
+            background-color: #EAE3D9;
+            background-attachment: fixed;
+        }
+
+        .fade-in-on-scroll {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+        .fade-in-on-scroll.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: all 0.5s ease-in-out;
+        }
+        .accordion-button[aria-expanded="true"] + .accordion-content {
+            max-height: 500px;
+        }
+        .accordion-button[aria-expanded="true"] .accordion-icon {
+            transform: rotate(135deg);
+        }
+        .accordion-icon {
+            transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        .card-tilt {
+            transition: transform 0.1s linear, box-shadow 0.3s ease;
+            will-change: transform;
+        }
+        .card-tilt:hover {
+            box-shadow: 0px 30px 50px -20px rgba(0, 0, 0, 0.2);
+        }
+        .card-tilt.faded {
+            opacity: 0.4;
+            transform: scale(0.95) !important;
+            cursor: default;
+        }
+
+        #typewriter-prayer {
+            white-space: pre-wrap;
+            border-right: .15em solid #B38B6D;
+            animation: blink-caret .75s step-end infinite;
+        }
+
+        #journey-nav {
+            transition: opacity 0.5s, transform 0.5s;
+        }
+        
+        .text-heading { color: #3A3A3A; }
+        .text-brand { color: #B38B6D; }
+        .border-brand { border-color: #B38B6D; }
+        .bg-brand { background-color: #B38B6D; }
+        .hover-bg-brand-dark:hover { background-color: #a17c60; }
+        
+        .title-word {
+            display: inline-block;
+            overflow: hidden;
+        }
+        .title-word > span {
+            display: inline-block;
+            transform: translateY(100%);
+            opacity: 0;
+            animation: titleReveal 0.8s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+        }
+        
+        .scroll-down-arrow {
+            width: 24px;
+            height: 24px;
+            border-left: 3px solid #B38B6D;
+            border-bottom: 3px solid #B38B6D;
+            transform: rotate(-45deg);
+            animation: bounce 2s infinite;
+        }
+
+        .gallery-content {
+            transition: max-height 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+    </style>
+</head>
+<body class="antialiased">
+
+    <nav id="journey-nav" class="fixed top-1/2 right-4 transform -translate-y-1/2 opacity-0 z-50 p-2 bg-white/70 backdrop-blur-sm rounded-full shadow-lg hidden md:block">
+        <ul class="space-y-3">
+            <li><a href="#inicio" class="journey-link block w-3 h-3 bg-gray-400 rounded-full transition-all duration-300 hover:bg-brand" data-section="inicio" title="Início"></a></li>
+            <li><a href="#dilema" class="journey-link block w-3 h-3 bg-gray-400 rounded-full transition-all duration-300 hover:bg-brand" data-section="dilema" title="O Peso"></a></li>
+            <li><a href="#graca" class="journey-link block w-3 h-3 bg-gray-400 rounded-full transition-all duration-300 hover:bg-brand" data-section="graca" title="A Graça"></a></li>
+            <li><a href="#porta" class="journey-link block w-3 h-3 bg-gray-400 rounded-full transition-all duration-300 hover:bg-brand" data-section="porta" title="O Convite"></a></li>
+            <li><a href="#beneficios" class="journey-link block w-3 h-3 bg-gray-400 rounded-full transition-all duration-300 hover:bg-brand" data-section="beneficios" title="Benefícios"></a></li>
+            <li><a href="#caminho" class="journey-link block w-3 h-3 bg-gray-400 rounded-full transition-all duration-300 hover:bg-brand" data-section="caminho" title="O Caminho"></a></li>
+            <li><a href="#convite" class="journey-link block w-3 h-3 bg-gray-400 rounded-full transition-all duration-300 hover:bg-brand" data-section="convite" title="A Oração"></a></li>
+        </ul>
+    </nav>
+    
+    <main>
+        <section id="inicio" class="min-h-screen flex flex-col justify-center items-center text-center p-6 relative">
+            <div class="max-w-3xl">
+                <h1 id="main-title" class="text-4xl sm:text-5xl md:text-6xl font-bold text-heading leading-tight opacity-0"></h1>
+                <p class="mt-6 text-lg text-gray-600 max-w-2xl mx-auto" style="animation: fadeIn 1s ease-out 1s forwards; opacity: 0;">Uma pergunta que ecoa em nossos corações, nos convidando a uma jornada de reflexão e esperança.</p>
+                <div class="mt-12" style="animation: fadeIn 1s ease-out 1.5s forwards; opacity: 0;">
+                    <a href="#dilema" class="inline-block px-8 py-3 bg-brand text-white font-semibold rounded-lg shadow-md hover-bg-brand-dark transition-all duration-300 transform hover:scale-105 hover:shadow-xl">
+                        Iniciar Jornada
+                    </a>
+                </div>
+            </div>
+             <div class="absolute bottom-10 left-1/2 -translate-x-1/2" style="animation: fadeIn 1s ease-out 2s forwards; opacity: 0;">
+                <div class="scroll-down-arrow"></div>
+            </div>
+        </section>
+
+        <section id="dilema" class="py-20 sm:py-24 md:py-32">
+            <div class="container mx-auto px-6 max-w-4xl text-center">
+                <div class="fade-in-on-scroll">
+                    <h2 class="text-3xl sm:text-4xl font-bold text-heading">O Peso do Passado</h2>
+                    <p class="mt-4 text-lg text-gray-600 mb-12">Muitas vezes, são coisas específicas que nos prendem. Toque em cada peso para começar a jornada de deixá-los para trás.</p>
+                    <div class="grid sm:grid-cols-3 gap-6 text-center">
+                        <div class="card-tilt p-6 bg-white rounded-lg shadow-sm border border-gray-200 cursor-pointer">
+                            <h3 class="text-xl font-semibold text-heading">Palavras que Feriram</h3>
+                            <p class="mt-2 text-gray-500">O que foi dito ou o que você disse.</p>
+                        </div>
+                        <div class="card-tilt p-6 bg-white rounded-lg shadow-sm border border-gray-200 cursor-pointer">
+                            <h3 class="text-xl font-semibold text-heading">Atitudes e Erros</h3>
+                            <p class="mt-2 text-gray-500">Escolhas que geraram arrependimento.</p>
+                        </div>
+                        <div class="card-tilt p-6 bg-white rounded-lg shadow-sm border border-gray-200 cursor-pointer">
+                            <h3 class="text-xl font-semibold text-heading">Sonhos Frustrados</h3>
+                            <p class="mt-2 text-gray-500">O peso do que "poderia ter sido".</p>
+                        </div>
+                    </div>
+                    <p id="dilema-revelation" class="mt-12 text-lg text-brand font-semibold opacity-0 transition-opacity duration-1000">Esses pesos parecem permanentes... mas existe uma força maior que todos eles.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="graca" class="py-20 sm:py-24 md:py-32 bg-accent-fixed">
+            <div class="container mx-auto px-6 max-w-4xl text-center relative z-10">
+                <div class="fade-in-on-scroll">
+                    <h2 class="text-3xl sm:text-4xl font-bold text-heading">A Graça de Cristo: O Verdadeiro Recomeço</h2>
+                    <p class="mt-4 text-lg text-gray-600">A Bíblia nos apresenta um conceito poderoso e transformador: a <strong class="text-brand">Graça</strong>. Não é sobre o que nós fazemos, mas sobre o que já foi feito por nós. É o amor de Deus que não podemos merecer, um favor que não podemos comprar.</p>
+                    <blockquote class="mt-8 italic text-gray-700 border-l-4 border-brand pl-6 py-2 max-w-2xl mx-auto text-left bg-white/30 backdrop-blur-sm rounded-r-lg">
+                        <p>"Pois pela graça vocês são salvos, por meio da fé, e isto não vem de vocês, é dom de Deus; não por obras, para que ninguém se glorie."</p>
+                        <cite class="mt-2 block font-semibold not-italic">Efésios 2:8-9</cite>
+                    </blockquote>
+                </div>
+            </div>
+        </section>
+
+        <section id="porta" class="py-20 sm:py-24 md:py-32">
+            <div class="container mx-auto px-6 max-w-3xl text-center">
+                <div class="fade-in-on-scroll">
+                    <h2 class="text-3xl sm:text-4xl font-bold text-heading">Ele está à Porta</h2>
+                     <p class="mt-4 text-lg text-gray-600">Este recomeço não é algo que você precisa buscar sozinho. O convite é feito pelo próprio Cristo, que espera pacientemente por sua decisão.</p>
+                    <blockquote class="mt-12 text-2xl italic text-gray-700 max-w-2xl mx-auto leading-relaxed">
+                        <p>"Eis que estou à porta e bato; se alguém ouvir a minha voz e abrir a porta, entrarei em sua casa e com ele cearei, e ele comigo."</p>
+                        <cite class="mt-4 block text-lg font-semibold not-italic text-brand">Apocalipse 3:20</cite>
+                    </blockquote>
+                </div>
+            </div>
+        </section>
+        
+        <section id="beneficios" class="py-20 sm:py-24 md:py-32 bg-accent-fixed">
+            <div class="container mx-auto px-6 max-w-4xl relative z-10">
+                <div class="text-center fade-in-on-scroll">
+                    <h2 class="text-3xl sm:text-4xl font-bold text-heading">Os Dons da Nova Vida</h2>
+                    <p class="mt-4 text-lg text-gray-600">Ao abrir a porta, você não encontra uma lista de regras, mas sim presentes que transformam sua vida. Toque em cada um para descobrir.</p>
+                </div>
+
+                <div id="gallery-container" class="mt-16 grid grid-cols-1 md:grid-cols-2 gap-8 fade-in-on-scroll">
+                    
+                    <div class="gallery-card bg-white/50 backdrop-blur-sm rounded-lg shadow-sm border border-white/50 p-6 cursor-pointer transition-all duration-500 hover:shadow-xl hover:-translate-y-2">
+                        <div class="flex items-center justify-between">
+                            <h3 class="text-xl font-semibold text-heading">Perdão Incondicional</h3>
+                            <span class="text-3xl text-brand transition-transform duration-500">🕊️</span>
+                        </div>
+                        <div class="gallery-content mt-4 overflow-hidden max-h-0">
+                            <p class="text-gray-600">Seus erros passados não definem mais o seu futuro. Em Cristo, você é perdoado e purificado, livre da culpa e da condenação que pesam sobre a alma.</p>
+                        </div>
+                    </div>
+
+                    <div class="gallery-card bg-white/50 backdrop-blur-sm rounded-lg shadow-sm border border-white/50 p-6 cursor-pointer transition-all duration-500 hover:shadow-xl hover:-translate-y-2">
+                        <div class="flex items-center justify-between">
+                            <h3 class="text-xl font-semibold text-heading">Uma Nova Identidade</h3>
+                            <span class="text-3xl text-brand transition-transform duration-500">👑</span>
+                        </div>
+                        <div class="gallery-content mt-4 overflow-hidden max-h-0">
+                            <p class="text-gray-600">Você deixa de ser prisioneiro do seu passado para se tornar filho amado de Deus, com um valor e uma dignidade que ninguém pode tirar.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="gallery-card bg-white/50 backdrop-blur-sm rounded-lg shadow-sm border border-white/50 p-6 cursor-pointer transition-all duration-500 hover:shadow-xl hover:-translate-y-2">
+                        <div class="flex items-center justify-between">
+                            <h3 class="text-xl font-semibold text-heading">Força para o Hoje</h3>
+                            <span class="text-3xl text-brand transition-transform duration-500">🛡️</span>
+                        </div>
+                        <div class="gallery-content mt-4 overflow-hidden max-h-0">
+                            <p class="text-gray-600">A mesma graça que perdoa é a que nos fortalece para viver cada dia de uma maneira nova, vencendo velhos hábitos e construindo um futuro de esperança.</p>
+                        </div>
+                    </div>
+
+                    <div class="gallery-card bg-white/50 backdrop-blur-sm rounded-lg shadow-sm border border-white/50 p-6 cursor-pointer transition-all duration-500 hover:shadow-xl hover:-translate-y-2">
+                        <div class="flex items-center justify-between">
+                            <h3 class="text-xl font-semibold text-heading">Um Propósito Renovado</h3>
+                            <span class="text-3xl text-brand transition-transform duration-500">🧭</span>
+                        </div>
+                        <div class="gallery-content mt-4 overflow-hidden max-h-0">
+                            <p class="text-gray-600">Sua vida ganha um novo significado quando você entende que foi criado para se relacionar com Deus e viver os planos Dele, fazendo a diferença no mundo.</p>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <section id="caminho" class="py-20 sm:py-24 md:py-32">
+            <div class="container mx-auto px-6 max-w-5xl relative z-10">
+                <div class="text-center fade-in-on-scroll">
+                    <h2 class="text-3xl sm:text-4xl font-bold text-heading">Como Viver Esse Recomeço?</h2>
+                    <p class="mt-4 text-lg text-gray-600">O recomeço que Cristo oferece não é uma fórmula mágica, mas um convite a um relacionamento. Começa com simples passos de fé.</p>
+                </div>
+                <div class="mt-16 grid md:grid-cols-3 gap-8 md:gap-12 text-center">
+                    <div class="fade-in-on-scroll" style="transition-delay: 100ms;">
+                        <div class="mx-auto flex items-center justify-center w-20 h-20 rounded-full bg-brand text-white text-3xl font-bold shadow-lg">1</div>
+                        <h3 class="mt-6 text-xl sm:text-2xl font-semibold text-heading">Reconheça</h3>
+                        <p class="mt-2 text-gray-600">Admita que você precisa de ajuda e do perdão que só Deus pode dar. A humildade é o primeiro passo.</p>
+                    </div>
+                    <div class="fade-in-on-scroll" style="transition-delay: 200ms;">
+                        <div class="mx-auto flex items-center justify-center w-20 h-20 rounded-full bg-brand text-white text-3xl font-bold shadow-lg">2</div>
+                        <h3 class="mt-6 text-xl sm:text-2xl font-semibold text-heading">Creia</h3>
+                        <p class="mt-2 text-gray-600">Acredite que Jesus morreu em seu lugar e ressuscitou para lhe dar uma nova vida.</p>
+                    </div>
+                    <div class="fade-in-on-scroll" style="transition-delay: 300ms;">
+                        <div class="mx-auto flex items-center justify-center w-20 h-20 rounded-full bg-brand text-white text-3xl font-bold shadow-lg">3</div>
+                        <h3 class="mt-6 text-xl sm:text-2xl font-semibold text-heading">Receba</h3>
+                        <p class="mt-2 text-gray-600">Em uma simples oração, aceite esse presente e peça para que a graça Dele transforme sua vida.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section id="convite" class="py-20 sm:py-24 md:py-32 bg-accent-fixed">
+            <div class="container mx-auto px-6 max-w-3xl text-center relative z-10">
+                <div class="fade-in-on-scroll">
+                    <h2 class="text-3xl sm:text-4xl font-bold text-heading">Sua Oração Pessoal</h2>
+                    <p class="mt-4 text-lg text-gray-600">Se você deseja este recomeço, o passo final é seu. A oração é uma conversa sincera com Deus.</p>
+                    <div class="mt-8">
+                        <button id="pray-button" class="inline-block px-8 py-3 bg-brand text-white font-semibold rounded-lg shadow-md hover-bg-brand-dark transition-all duration-300 transform hover:scale-105 hover:shadow-xl">
+                            Estou pronto. Quero fazer esta oração.
+                        </button>
+                    </div>
+                    <div id="prayer-container" class="mt-8 p-6 sm:p-8 bg-white/50 backdrop-blur-sm border border-white/50 rounded-lg shadow-sm text-left italic text-gray-600 hidden">
+                        <p id="typewriter-prayer"></p>
+                    </div>
+                    <p class="mt-12 text-xl sm:text-2xl font-semibold text-heading">O convite está feito. A graça está disponível. <br class="hidden sm:block"> A decisão de recomeçar é sua.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="bg-accent-fixed py-8 text-center text-gray-500 relative z-10">
+        <p class="px-4">&copy; 2025 Jornada da Graça. Uma mensagem de esperança para todos.</p>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const fadeInElements = document.querySelectorAll('.fade-in-on-scroll');
+            const tiltCards = document.querySelectorAll('.card-tilt');
+            const dilemaRevelation = document.getElementById('dilema-revelation');
+            const prayButton = document.getElementById('pray-button');
+            const prayerContainer = document.getElementById('prayer-container');
+            const typewriterPrayer = document.getElementById('typewriter-prayer');
+            const journeyNav = document.getElementById('journey-nav');
+            const journeyLinks = document.querySelectorAll('.journey-link');
+            const sections = document.querySelectorAll('main section');
+            const mainTitle = document.getElementById('main-title');
+
+            // 1. Animação do Título Principal
+            const titleText = "O que você faria se pudesse recomeçar de novo?";
+            mainTitle.innerHTML = titleText.split(' ').map(word => `<span class="title-word"><span>${word}</span></span>`).join(' ');
+            mainTitle.style.opacity = 1;
+            document.querySelectorAll('.title-word > span').forEach((span, index) => {
+                span.style.animationDelay = `${index * 0.05}s`;
+            });
+
+            // 2. Observer para animações de scroll
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('is-visible');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.1 });
+            fadeInElements.forEach(el => observer.observe(el));
+            
+            // 3. Lógica da Galeria de Dons
+            const galleryCards = document.querySelectorAll('.gallery-card');
+            galleryCards.forEach(card => {
+                card.addEventListener('click', () => {
+                    const wasActive = card.classList.contains('is-active');
+                    
+                    galleryCards.forEach(c => {
+                        c.classList.remove('is-active');
+                        c.querySelector('.gallery-content').style.maxHeight = '0px';
+                        c.querySelector('span').style.transform = 'rotate(0deg)';
+                    });
+                    
+                    if (!wasActive) {
+                        card.classList.add('is-active');
+                        const content = card.querySelector('.gallery-content');
+                        content.style.maxHeight = content.scrollHeight + "px";
+                        card.querySelector('span').style.transform = 'rotate(15deg) scale(1.2)';
+                    }
+                });
+            });
+
+            // 4. Lógica dos Cartões com Efeito Tilt 3D
+            const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+            if (!isTouchDevice) {
+                tiltCards.forEach(card => {
+                    card.addEventListener('mousemove', (e) => {
+                        if (card.classList.contains('faded')) return;
+                        const rect = card.getBoundingClientRect();
+                        const x = e.clientX - rect.left;
+                        const y = e.clientY - rect.top;
+                        const { width, height } = rect;
+                        const rotateX = (y - height / 2) / (height / 2) * -7;
+                        const rotateY = (x - width / 2) / (width / 2) * 7;
+                        card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.05, 1.05, 1.05)`;
+                    });
+                    card.addEventListener('mouseleave', () => {
+                        card.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) scale3d(1, 1, 1)';
+                    });
+                });
+            }
+             tiltCards.forEach(card => {
+                card.addEventListener('click', () => {
+                    card.classList.add('faded');
+                    const allFaded = [...tiltCards].every(c => c.classList.contains('faded'));
+                    if (allFaded) {
+                        setTimeout(() => dilemaRevelation.style.opacity = '1', 300);
+                    }
+                });
+            });
+
+            // 5. Animação da Oração
+            const prayerText = `"Deus, eu reconheço meus erros e o quanto preciso de Ti. Creio que Jesus é a resposta e o único caminho. Eu aceito o Teu perdão e a Tua graça. Entra na minha vida e me ensina a viver este recomeço. Amém."`;
+            prayButton.addEventListener('click', () => {
+                prayButton.style.display = 'none';
+                prayerContainer.classList.remove('hidden');
+                let i = 0;
+                typewriterPrayer.innerHTML = "";
+                function typeWriter() {
+                    if (i < prayerText.length) {
+                        typewriterPrayer.innerHTML += prayerText.charAt(i);
+                        i++;
+                        setTimeout(typeWriter, 50);
+                    } else {
+                         typewriterPrayer.style.borderRight = 'none';
+                    }
+                }
+                typeWriter();
+            });
+
+            // 6. Navegador de Jornada
+            const navObserver = new IntersectionObserver((entries) => {
+                 entries.forEach(entry => {
+                    if(entry.isIntersecting) {
+                        const id = entry.target.getAttribute('id');
+                        journeyLinks.forEach(link => {
+                            link.classList.remove('bg-brand', 'scale-150');
+                            link.classList.add('bg-gray-400');
+                            if(link.dataset.section === id) {
+                                link.classList.add('bg-brand', 'scale-150');
+                                link.classList.remove('bg-gray-400');
+                            }
+                        });
+
+                        if (entry.target.id === 'inicio' && entry.intersectionRatio > 0.5) {
+                            journeyNav.style.opacity = '0';
+                            journeyNav.style.transform = 'translateY(-50%) translateX(100%)';
+                        } else {
+                            journeyNav.style.opacity = '1';
+                            journeyNav.style.transform = 'translateY(-50%) translateX(0)';
+                        }
+                    }
+                });
+            }, { threshold: 0.5 });
+            sections.forEach(section => navObserver.observe(section));
+        });
+    </script>
+
+</body>
+</html>
