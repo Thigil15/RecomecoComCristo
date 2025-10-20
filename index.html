@@ -60,21 +60,6 @@
             transform: translateY(0);
         }
 
-        .accordion-content {
-            max-height: 0;
-            overflow: hidden;
-            transition: all 0.5s ease-in-out;
-        }
-        .accordion-button[aria-expanded="true"] + .accordion-content {
-            max-height: 500px;
-        }
-        .accordion-button[aria-expanded="true"] .accordion-icon {
-            transform: rotate(135deg);
-        }
-        .accordion-icon {
-            transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-        }
-
         .card-tilt {
             transition: transform 0.1s linear, box-shadow 0.3s ease;
             will-change: transform;
@@ -137,6 +122,7 @@
             <li><a href="#inicio" class="journey-link block w-3 h-3 bg-gray-400 rounded-full transition-all duration-300 hover:bg-brand" data-section="inicio" title="Início"></a></li>
             <li><a href="#dilema" class="journey-link block w-3 h-3 bg-gray-400 rounded-full transition-all duration-300 hover:bg-brand" data-section="dilema" title="O Peso"></a></li>
             <li><a href="#graca" class="journey-link block w-3 h-3 bg-gray-400 rounded-full transition-all duration-300 hover:bg-brand" data-section="graca" title="A Graça"></a></li>
+            <li><a href="#novacriacao" class="journey-link block w-3 h-3 bg-gray-400 rounded-full transition-all duration-300 hover:bg-brand" data-section="novacriacao" title="Nova Criação"></a></li>
             <li><a href="#porta" class="journey-link block w-3 h-3 bg-gray-400 rounded-full transition-all duration-300 hover:bg-brand" data-section="porta" title="O Convite"></a></li>
             <li><a href="#beneficios" class="journey-link block w-3 h-3 bg-gray-400 rounded-full transition-all duration-300 hover:bg-brand" data-section="beneficios" title="Benefícios"></a></li>
             <li><a href="#caminho" class="journey-link block w-3 h-3 bg-gray-400 rounded-full transition-all duration-300 hover:bg-brand" data-section="caminho" title="O Caminho"></a></li>
@@ -162,9 +148,9 @@
 
         <section id="dilema" class="py-20 sm:py-24 md:py-32">
             <div class="container mx-auto px-6 max-w-4xl text-center">
-                <div class="fade-in-on-scroll">
+                <div id="dilema-container" class="fade-in-on-scroll">
                     <h2 class="text-3xl sm:text-4xl font-bold text-heading">Reconhece algum destes pesos?</h2>
-                    <p class="mt-4 text-lg text-gray-600 mb-12">Nossa jornada é muitas vezes marcada por fardos universais. Toque naqueles que você sente para começar a jornada de deixá-los para trás.</p>
+                    <p class="mt-4 text-lg text-gray-600 mb-12">Nossa jornada é muitas vezes marcada por fardos universais. O primeiro passo é reconhecê-los.</p>
                     <div class="grid sm:grid-cols-3 gap-6 text-center">
                         <div class="card-tilt p-6 bg-white rounded-lg shadow-sm border border-gray-200 cursor-pointer flex flex-col items-center justify-start">
                             <span class="text-5xl mb-4">⛓️</span>
@@ -199,13 +185,26 @@
                 </div>
             </div>
         </section>
-
-        <section id="porta" class="py-20 sm:py-24 md:py-32">
+        
+        <section id="novacriacao" class="py-20 sm:py-24 md:py-32">
             <div class="container mx-auto px-6 max-w-3xl text-center">
+                <div class="fade-in-on-scroll">
+                    <h2 class="text-3xl sm:text-4xl font-bold text-heading">Uma Nova Criação</h2>
+                     <p class="mt-4 text-lg text-gray-600">Aceitar a graça não é apenas ser perdoado, é ser transformado. É a promessa de que o velho pode dar lugar ao novo.</p>
+                    <blockquote class="mt-12 text-xl italic text-gray-700 max-w-2xl mx-auto leading-relaxed">
+                        <p>"Portanto, se alguém está em Cristo, é nova criação. As coisas antigas já passaram; eis que surgiram coisas novas!"</p>
+                        <cite class="mt-4 block text-lg font-semibold not-italic text-brand">2 Coríntios 5:17</cite>
+                    </blockquote>
+                </div>
+            </div>
+        </section>
+
+        <section id="porta" class="py-20 sm:py-24 md:py-32 bg-accent-fixed">
+            <div class="container mx-auto px-6 max-w-3xl text-center relative z-10">
                 <div class="fade-in-on-scroll">
                     <h2 class="text-3xl sm:text-4xl font-bold text-heading">Ele está à Porta</h2>
                      <p class="mt-4 text-lg text-gray-600">Este recomeço não é algo que você precisa buscar sozinho. O convite é feito pelo próprio Cristo, que espera pacientemente por sua decisão.</p>
-                    <blockquote class="mt-12 text-2xl italic text-gray-700 max-w-2xl mx-auto leading-relaxed">
+                    <blockquote class="mt-12 text-2xl italic text-gray-700 max-w-2xl mx-auto leading-relaxed bg-white/30 backdrop-blur-sm rounded-lg p-6">
                         <p>"Eis que estou à porta e bato; se alguém ouvir a minha voz e abrir a porta, entrarei em sua casa e com ele cearei, e ele comigo."</p>
                         <cite class="mt-4 block text-lg font-semibold not-italic text-brand">Apocalipse 3:20</cite>
                     </blockquote>
@@ -213,7 +212,7 @@
             </div>
         </section>
         
-        <section id="beneficios" class="py-20 sm:py-24 md:py-32 bg-accent-fixed">
+        <section id="beneficios" class="py-20 sm:py-24 md:py-32">
             <div class="container mx-auto px-6 max-w-4xl relative z-10">
                 <div class="text-center fade-in-on-scroll">
                     <h2 class="text-3xl sm:text-4xl font-bold text-heading">Os Dons da Nova Vida</h2>
@@ -222,7 +221,7 @@
 
                 <div id="gallery-container" class="mt-16 grid grid-cols-1 md:grid-cols-2 gap-8 fade-in-on-scroll">
                     
-                    <div class="gallery-card bg-white/50 backdrop-blur-sm rounded-lg shadow-sm border border-white/50 p-6 cursor-pointer transition-all duration-500 hover:shadow-xl hover:-translate-y-2">
+                    <div class="gallery-card bg-white rounded-lg shadow-sm border border-gray-200 p-6 cursor-pointer transition-all duration-500 hover:shadow-xl hover:-translate-y-2">
                         <div class="flex items-center justify-between">
                             <h3 class="text-xl font-semibold text-heading">Perdão Incondicional</h3>
                             <span class="text-3xl text-brand transition-transform duration-500">🕊️</span>
@@ -232,7 +231,7 @@
                         </div>
                     </div>
 
-                    <div class="gallery-card bg-white/50 backdrop-blur-sm rounded-lg shadow-sm border border-white/50 p-6 cursor-pointer transition-all duration-500 hover:shadow-xl hover:-translate-y-2">
+                    <div class="gallery-card bg-white rounded-lg shadow-sm border border-gray-200 p-6 cursor-pointer transition-all duration-500 hover:shadow-xl hover:-translate-y-2">
                         <div class="flex items-center justify-between">
                             <h3 class="text-xl font-semibold text-heading">Uma Nova Identidade</h3>
                             <span class="text-3xl text-brand transition-transform duration-500">👑</span>
@@ -242,7 +241,7 @@
                         </div>
                     </div>
                     
-                    <div class="gallery-card bg-white/50 backdrop-blur-sm rounded-lg shadow-sm border border-white/50 p-6 cursor-pointer transition-all duration-500 hover:shadow-xl hover:-translate-y-2">
+                    <div class="gallery-card bg-white rounded-lg shadow-sm border border-gray-200 p-6 cursor-pointer transition-all duration-500 hover:shadow-xl hover:-translate-y-2">
                         <div class="flex items-center justify-between">
                             <h3 class="text-xl font-semibold text-heading">Força para o Hoje</h3>
                             <span class="text-3xl text-brand transition-transform duration-500">🛡️</span>
@@ -252,7 +251,7 @@
                         </div>
                     </div>
 
-                    <div class="gallery-card bg-white/50 backdrop-blur-sm rounded-lg shadow-sm border border-white/50 p-6 cursor-pointer transition-all duration-500 hover:shadow-xl hover:-translate-y-2">
+                    <div class="gallery-card bg-white rounded-lg shadow-sm border border-gray-200 p-6 cursor-pointer transition-all duration-500 hover:shadow-xl hover:-translate-y-2">
                         <div class="flex items-center justify-between">
                             <h3 class="text-xl font-semibold text-heading">Um Propósito Renovado</h3>
                             <span class="text-3xl text-brand transition-transform duration-500">🧭</span>
@@ -266,7 +265,7 @@
             </div>
         </section>
 
-        <section id="caminho" class="py-20 sm:py-24 md:py-32">
+        <section id="caminho" class="py-20 sm:py-24 md:py-32 bg-accent-fixed">
             <div class="container mx-auto px-6 max-w-5xl relative z-10">
                 <div class="text-center fade-in-on-scroll">
                     <h2 class="text-3xl sm:text-4xl font-bold text-heading">Como Viver Esse Recomeço?</h2>
@@ -292,7 +291,7 @@
             </div>
         </section>
         
-        <section id="convite" class="py-20 sm:py-24 md:py-32 bg-accent-fixed">
+        <section id="convite" class="py-20 sm:py-24 md:py-32">
             <div class="container mx-auto px-6 max-w-3xl text-center relative z-10">
                 <div class="fade-in-on-scroll">
                     <h2 class="text-3xl sm:text-4xl font-bold text-heading">Sua Oração Pessoal</h2>
@@ -328,7 +327,6 @@
             const sections = document.querySelectorAll('main section');
             const mainTitle = document.getElementById('main-title');
 
-            // 1. Animação do Título Principal
             const titleText = "O que você faria se pudesse recomeçar de novo?";
             mainTitle.innerHTML = titleText.split(' ').map(word => `<span class="title-word"><span>${word}</span></span>`).join(' ');
             mainTitle.style.opacity = 1;
@@ -336,23 +334,25 @@
                 span.style.animationDelay = `${index * 0.05}s`;
             });
 
-            // 2. Observer para animações de scroll
             const observer = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
                         entry.target.classList.add('is-visible');
+                        if (entry.target.id === 'dilema-container') {
+                            setTimeout(() => {
+                                dilemaRevelation.style.opacity = '1';
+                            }, 600); 
+                        }
                         observer.unobserve(entry.target);
                     }
                 });
-            }, { threshold: 0.1 });
+            }, { threshold: 0.2 });
             fadeInElements.forEach(el => observer.observe(el));
             
-            // 3. Lógica da Galeria de Dons
             const galleryCards = document.querySelectorAll('.gallery-card');
             galleryCards.forEach(card => {
                 card.addEventListener('click', () => {
                     const wasActive = card.classList.contains('is-active');
-                    
                     galleryCards.forEach(c => {
                         c.classList.remove('is-active');
                         c.querySelector('.gallery-content').style.maxHeight = '0px';
@@ -368,7 +368,6 @@
                 });
             });
 
-            // 4. Lógica dos Cartões com Efeito Tilt 3D
             const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
             if (!isTouchDevice) {
                 tiltCards.forEach(card => {
@@ -390,15 +389,10 @@
              tiltCards.forEach(card => {
                 card.addEventListener('click', () => {
                     card.classList.add('faded');
-                    const allFaded = [...tiltCards].every(c => c.classList.contains('faded'));
-                    if (allFaded) {
-                        setTimeout(() => dilemaRevelation.style.opacity = '1', 300);
-                    }
                 });
             });
 
-            // 5. Animação da Oração
-            const prayerText = `"Deus, eu reconheço meus erros e o quanto preciso de Ti. Creio que Jesus é a resposta e o único caminho. Eu aceito o Teu perdão e a Tua graça. Entra na minha vida e me ensina a viver este recomeço. Amém."`;
+            const prayerText = `"Deus, eu reconheço meus erros e o quanto preciso de Ti. Creio que Jesus é a resposta e o único caminho. Eu aceito o Teu perdão e a Tua graça. Entra na minha vida e me ensina a viver este recomeço. Em Nome do Senhor Jesus, Amém."`;
             prayButton.addEventListener('click', () => {
                 prayButton.style.display = 'none';
                 prayerContainer.classList.remove('hidden');
@@ -416,7 +410,6 @@
                 typeWriter();
             });
 
-            // 6. Navegador de Jornada
             const navObserver = new IntersectionObserver((entries) => {
                  entries.forEach(entry => {
                     if(entry.isIntersecting) {
