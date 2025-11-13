@@ -226,6 +226,13 @@
                     <div class="mb-4 p-4 bg-gray-50 rounded border-l-4 border-blue-500">
                         <p class="text-gray-700 italic">"${comment.text}"</p>
                     </div>
+                    <div class="mb-4">
+                        <span class="text-sm text-gray-500 mr-2">Avaliação:</span>
+                        <span class="text-xl">
+                            ${Array(5).fill(0).map((_, i) => i < (comment.rating || 5) ? '<span class="text-yellow-400">★</span>' : '<span class="text-gray-300">★</span>').join('')}
+                        </span>
+                        <span class="text-sm text-gray-600 ml-2">(${comment.rating || 5} estrelas)</span>
+                    </div>
                     <div class="flex gap-2">
                         ${!comment.approved ? `
                             <button onclick="approveComment(${index})" class="text-sm px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700 transition-colors">
@@ -273,7 +280,7 @@
         function copyComment(index) {
             const comments = JSON.parse(localStorage.getItem('jornada-comments') || '[]');
             const comment = comments[index];
-            const text = `Nome: ${comment.name}\nLocalização: ${comment.location}\nComentário: ${comment.text}\nStatus: ${comment.approved ? 'Aprovado' : 'Pendente'}`;
+            const text = `Nome: ${comment.name}\nLocalização: ${comment.location}\nComentário: ${comment.text}\nAvaliação: ${comment.rating || 5} estrelas\nStatus: ${comment.approved ? 'Aprovado' : 'Pendente'}`;
             navigator.clipboard.writeText(text).then(() => {
                 alert('Comentário copiado para a área de transferência!');
             });
