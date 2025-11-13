@@ -438,12 +438,31 @@
         <section id="testemunhos" class="py-20 sm:py-24 md:py-32">
             <div class="container mx-auto px-6 max-w-6xl relative z-10">
                 <div class="text-center fade-in-on-scroll">
-                    <h2 class="text-3xl sm:text-4xl font-bold text-heading">Compartilhe seu Testemunho</h2>
-                    <p class="mt-4 text-lg text-gray-600">Deixe seu testemunho de como a graça de Cristo transformou sua vida</p>
+                    <h2 class="text-3xl sm:text-4xl font-bold text-heading">Testemunhos</h2>
+                    <p class="mt-4 text-lg text-gray-600">Veja como a graça de Cristo tem transformado vidas</p>
                 </div>
 
-                <!-- Comment Form -->
-                <div class="mt-12 max-w-2xl mx-auto bg-white rounded-lg shadow-sm p-8 border border-gray-200">
+                <!-- Display Approved Comments -->
+                <div id="comments-container" class="mt-16 grid md:grid-cols-3 gap-8">
+                    <!-- Approved comments will be loaded here -->
+                </div>
+                <div id="no-comments" class="mt-16 text-center text-gray-500">
+                    <p>Nenhum testemunho publicado ainda. Seja o primeiro a compartilhar!</p>
+                </div>
+
+                <!-- Button to show comment form -->
+                <div class="mt-12 text-center">
+                    <button id="show-comment-form-btn" class="inline-block px-8 py-3 bg-brand text-white font-semibold rounded-lg shadow-md hover-bg-brand-dark transition-all duration-300 transform hover:scale-105">
+                        ✍️ Inserir Meu Testemunho
+                    </button>
+                </div>
+
+                <!-- Comment Form (initially hidden) -->
+                <div id="comment-form-container" class="mt-8 max-w-2xl mx-auto bg-white rounded-lg shadow-sm p-8 border border-gray-200 hidden">
+                    <div class="flex justify-between items-center mb-6">
+                        <h3 class="text-2xl font-bold text-heading">Compartilhe seu Testemunho</h3>
+                        <button id="close-comment-form-btn" class="text-gray-500 hover:text-gray-700 text-2xl font-bold">&times;</button>
+                    </div>
                     <form id="comment-form" class="space-y-4">
                         <div>
                             <label for="comment-name" class="block text-gray-700 font-semibold mb-2">Seu nome</label>
@@ -457,6 +476,19 @@
                             <label for="comment-text" class="block text-gray-700 font-semibold mb-2">Seu testemunho</label>
                             <textarea id="comment-text" name="text" placeholder="Compartilhe como a graça de Cristo transformou sua vida..." rows="4" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-brand focus:border-transparent transition-all" required></textarea>
                         </div>
+                        <div>
+                            <label class="block text-gray-700 font-semibold mb-2">Avaliação</label>
+                            <div class="flex items-center gap-2">
+                                <div id="star-rating" class="flex gap-1">
+                                    <span class="star cursor-pointer text-4xl text-gray-300 hover:text-yellow-400 transition-colors" data-value="1">★</span>
+                                    <span class="star cursor-pointer text-4xl text-gray-300 hover:text-yellow-400 transition-colors" data-value="2">★</span>
+                                    <span class="star cursor-pointer text-4xl text-gray-300 hover:text-yellow-400 transition-colors" data-value="3">★</span>
+                                    <span class="star cursor-pointer text-4xl text-gray-300 hover:text-yellow-400 transition-colors" data-value="4">★</span>
+                                    <span class="star cursor-pointer text-4xl text-gray-300 hover:text-yellow-400 transition-colors" data-value="5">★</span>
+                                </div>
+                                <input type="hidden" id="comment-rating" name="rating" value="5" required>
+                            </div>
+                        </div>
                         <button type="submit" class="w-full px-8 py-3 bg-brand text-white font-semibold rounded-lg shadow-md hover-bg-brand-dark transition-all duration-300 transform hover:scale-105">
                             Enviar Testemunho 🙏
                         </button>
@@ -465,14 +497,6 @@
                         <p class="font-semibold">✅ Testemunho enviado com sucesso!</p>
                         <p class="text-sm mt-2">Seu testemunho será revisado e publicado em breve.</p>
                     </div>
-                </div>
-
-                <!-- Display Approved Comments -->
-                <div id="comments-container" class="mt-16 grid md:grid-cols-3 gap-8">
-                    <!-- Approved comments will be loaded here -->
-                </div>
-                <div id="no-comments" class="mt-16 text-center text-gray-500">
-                    <p>Nenhum testemunho publicado ainda. Seja o primeiro a compartilhar!</p>
                 </div>
             </div>
         </section>
@@ -797,6 +821,67 @@
             }
             fetchDailyVerse();
 
+            // Star rating functionality
+            const stars = document.querySelectorAll('.star');
+            const ratingInput = document.getElementById('comment-rating');
+            let currentRating = 5; // Default to 5 stars
+
+            stars.forEach(star => {
+                star.addEventListener('click', function() {
+                    currentRating = parseInt(this.getAttribute('data-value'));
+                    ratingInput.value = currentRating;
+                    updateStarDisplay();
+                });
+
+                star.addEventListener('mouseenter', function() {
+                    const hoverValue = parseInt(this.getAttribute('data-value'));
+                    stars.forEach((s, idx) => {
+                        if (idx < hoverValue) {
+                            s.classList.add('text-yellow-400');
+                            s.classList.remove('text-gray-300');
+                        } else {
+                            s.classList.remove('text-yellow-400');
+                            s.classList.add('text-gray-300');
+                        }
+                    });
+                });
+            });
+
+            document.getElementById('star-rating').addEventListener('mouseleave', function() {
+                updateStarDisplay();
+            });
+
+            function updateStarDisplay() {
+                stars.forEach((star, idx) => {
+                    if (idx < currentRating) {
+                        star.classList.add('text-yellow-400');
+                        star.classList.remove('text-gray-300');
+                    } else {
+                        star.classList.remove('text-yellow-400');
+                        star.classList.add('text-gray-300');
+                    }
+                });
+            }
+
+            // Initialize star display
+            updateStarDisplay();
+
+            // Show/hide comment form
+            const showFormBtn = document.getElementById('show-comment-form-btn');
+            const closeFormBtn = document.getElementById('close-comment-form-btn');
+            const formContainer = document.getElementById('comment-form-container');
+
+            showFormBtn?.addEventListener('click', () => {
+                formContainer.classList.remove('hidden');
+                showFormBtn.classList.add('hidden');
+                formContainer.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            });
+
+            closeFormBtn?.addEventListener('click', () => {
+                formContainer.classList.add('hidden');
+                showFormBtn.classList.remove('hidden');
+            });
+
             // Load and display approved comments
             function loadComments() {
                 const comments = JSON.parse(localStorage.getItem('jornada-comments') || '[]');
@@ -811,6 +896,20 @@
                 }
                 
                 noComments.style.display = 'none';
+                
+                // Generate stars HTML based on rating
+                function getStarsHTML(rating) {
+                    const stars = [];
+                    for (let i = 0; i < 5; i++) {
+                        if (i < rating) {
+                            stars.push('<span class="text-yellow-400">★</span>');
+                        } else {
+                            stars.push('<span class="text-gray-300">★</span>');
+                        }
+                    }
+                    return stars.join('');
+                }
+                
                 container.innerHTML = approvedComments.map((comment, index) => `
                     <div class="fade-in-on-scroll bg-white rounded-lg shadow-sm p-8 border border-gray-200 hover:shadow-xl transition-all duration-300" style="transition-delay: ${index * 100}ms;">
                         <div class="flex items-center mb-4">
@@ -821,7 +920,9 @@
                             </div>
                         </div>
                         <p class="text-gray-600 italic">"${comment.text}"</p>
-                        <div class="mt-4 text-brand text-2xl">⭐⭐⭐⭐⭐</div>
+                        <div class="mt-4 text-2xl">
+                            ${getStarsHTML(comment.rating || 5)}
+                        </div>
                     </div>
                 `).join('');
             }
@@ -835,6 +936,7 @@
                     name: document.getElementById('comment-name').value,
                     location: document.getElementById('comment-location').value,
                     text: document.getElementById('comment-text').value,
+                    rating: parseInt(document.getElementById('comment-rating').value) || 5,
                     approved: false,
                     dataHora: new Date().toISOString()
                 };
@@ -844,10 +946,14 @@
                 localStorage.setItem('jornada-comments', JSON.stringify(comments));
                 
                 document.getElementById('comment-form').reset();
+                currentRating = 5;
+                updateStarDisplay();
                 document.getElementById('comment-success').classList.remove('hidden');
                 
                 setTimeout(() => {
                     document.getElementById('comment-success').classList.add('hidden');
+                    formContainer.classList.add('hidden');
+                    showFormBtn.classList.remove('hidden');
                 }, 5000);
             });
 
