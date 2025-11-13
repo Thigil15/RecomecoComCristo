@@ -167,39 +167,12 @@
         .share-telegram { background-color: #0088cc; color: white; }
         .share-email { background-color: #666; color: white; }
 
-        /* Floating Action Button */
-        .fab-button {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, #B38B6D, #d4a574);
-            color: white;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 24px;
-            box-shadow: 0 4px 20px rgba(179, 139, 109, 0.5);
-            cursor: pointer;
-            transition: all 0.3s ease;
-            z-index: 100;
-            animation: pulse 2s infinite;
-        }
-        .fab-button:hover {
-            transform: scale(1.1);
-            box-shadow: 0 6px 25px rgba(179, 139, 109, 0.7);
-        }
-        @keyframes pulse {
-            0%, 100% { box-shadow: 0 4px 20px rgba(179, 139, 109, 0.5); }
-            50% { box-shadow: 0 4px 30px rgba(179, 139, 109, 0.8); }
-        }
+
 
         /* Back to Top Button */
         .back-to-top {
             position: fixed;
-            bottom: 90px;
+            bottom: 20px;
             right: 20px;
             width: 50px;
             height: 50px;
@@ -250,21 +223,34 @@
 
         /* Dark Mode Styles */
         body.dark-mode {
-            background: linear-gradient(135deg, #1a1a1a, #2d2d2d, #1a1a1a);
-            color: #e0e0e0;
+            background: linear-gradient(135deg, #0f0f0f, #1a1a1a, #0f0f0f);
+            color: #e8e8e8;
         }
-        body.dark-mode .text-heading { color: #f0f0f0; }
-        body.dark-mode .text-gray-600 { color: #b0b0b0; }
-        body.dark-mode .text-gray-700 { color: #c0c0c0; }
-        body.dark-mode .text-gray-500 { color: #999; }
-        body.dark-mode .bg-white { background-color: #2d2d2d; }
-        body.dark-mode .bg-accent-fixed { background-color: #252525; }
-        body.dark-mode .border-gray-200 { border-color: #404040; }
-        body.dark-mode .border-gray-300 { border-color: #505050; }
-        body.dark-mode .shadow-sm { box-shadow: 0 1px 3px rgba(0,0,0,0.3); }
-        body.dark-mode footer { background-color: #1a1a1a; }
-        body.dark-mode input { background-color: #2d2d2d; color: #e0e0e0; }
+        body.dark-mode .text-heading { color: #f5f5f5; }
+        body.dark-mode .text-gray-600 { color: #c0c0c0; }
+        body.dark-mode .text-gray-700 { color: #d0d0d0; }
+        body.dark-mode .text-gray-500 { color: #a8a8a8; }
+        body.dark-mode .bg-white { background-color: #242424; }
+        body.dark-mode .bg-accent-fixed { background-color: #1a1a1a; }
+        body.dark-mode .border-gray-200 { border-color: #3a3a3a; }
+        body.dark-mode .border-gray-300 { border-color: #4a4a4a; }
+        body.dark-mode .shadow-sm { box-shadow: 0 1px 3px rgba(0,0,0,0.5); }
+        body.dark-mode footer { background-color: #0f0f0f; border-top: 1px solid #2a2a2a; }
+        body.dark-mode input,
+        body.dark-mode select,
+        body.dark-mode textarea { 
+            background-color: #2a2a2a; 
+            color: #e8e8e8; 
+            border-color: #3a3a3a;
+        }
         body.dark-mode input::placeholder { color: #888; }
+        body.dark-mode .dark-mode-toggle {
+            background: rgba(30, 30, 30, 0.95);
+        }
+        body.dark-mode .card-tilt:hover,
+        body.dark-mode .gallery-card:hover {
+            box-shadow: 0px 30px 50px -20px rgba(0, 0, 0, 0.7);
+        }
         
         /* Scroll behavior improvements */
         @media (prefers-reduced-motion: reduce) {
@@ -312,10 +298,7 @@
         <span>↑</span>
     </button>
 
-    <!-- Floating Action Button -->
-    <a href="#convite" class="fab-button" aria-label="Fazer a oração" title="Fazer a oração">
-        <span>🙏</span>
-    </a>
+
 
     <nav id="journey-nav" class="fixed top-1/2 right-4 transform -translate-y-1/2 opacity-0 z-50 p-2 bg-white/70 backdrop-blur-sm rounded-full shadow-lg hidden md:block" role="navigation" aria-label="Navegação da jornada">
         <ul class="space-y-3">
@@ -565,14 +548,14 @@
                     <div class="fade-in-on-scroll bg-white rounded-lg shadow-sm p-6 text-center hover:shadow-xl transition-all duration-300" style="transition-delay: 100ms;">
                         <span class="text-5xl mb-4 block">🎵</span>
                         <h3 class="text-xl font-semibold text-heading mb-3">Louvor e Adoração</h3>
-                        <p class="text-gray-600 mb-4">Playlist de músicas inspiradoras para sua caminhada</p>
-                        <a href="https://www.youtube.com/results?search_query=louvor+adoracao+cristo" target="_blank" rel="noopener noreferrer" class="inline-block px-6 py-2 bg-brand text-white rounded-lg hover-bg-brand-dark transition-all">Ouvir</a>
+                        <p class="text-gray-600 mb-4">Ouça "Entrego a Ti" por Rafaella Pinho</p>
+                        <a href="https://youtu.be/95svtr03LBo?si=BHYnLI5x5r86uc1I" target="_blank" rel="noopener noreferrer" class="inline-block px-6 py-2 bg-brand text-white rounded-lg hover-bg-brand-dark transition-all">Ouvir</a>
                     </div>
                     <div class="fade-in-on-scroll bg-white rounded-lg shadow-sm p-6 text-center hover:shadow-xl transition-all duration-300" style="transition-delay: 200ms;">
                         <span class="text-5xl mb-4 block">⛪</span>
                         <h3 class="text-xl font-semibold text-heading mb-3">Encontre uma Igreja</h3>
-                        <p class="text-gray-600 mb-4">Conecte-se com uma comunidade de fé próxima a você</p>
-                        <a href="https://www.google.com/maps/search/igreja+evangélica" target="_blank" rel="noopener noreferrer" class="inline-block px-6 py-2 bg-brand text-white rounded-lg hover-bg-brand-dark transition-all">Buscar</a>
+                        <p class="text-gray-600 mb-4">Conecte-se com uma Igreja Adventista próxima a você</p>
+                        <a href="https://www.google.com/maps/search/igreja+adventista" target="_blank" rel="noopener noreferrer" class="inline-block px-6 py-2 bg-brand text-white rounded-lg hover-bg-brand-dark transition-all">Buscar</a>
                     </div>
                 </div>
             </div>
@@ -607,23 +590,65 @@
         <section id="acompanhamento" class="py-20 sm:py-24 bg-accent-fixed">
             <div class="container mx-auto px-6 max-w-3xl text-center relative z-10">
                 <div class="fade-in-on-scroll">
-                    <h2 class="text-3xl sm:text-4xl font-bold text-heading">Continue Conectado</h2>
-                    <p class="mt-4 text-lg text-gray-600">Deixe seu contato para receber mensagens de encorajamento e recursos para sua jornada espiritual</p>
+                    <h2 class="text-3xl sm:text-4xl font-bold text-heading">Podemos Ajudá-lo?</h2>
+                    <p class="mt-4 text-lg text-gray-600">Estamos aqui para apoiar você em sua jornada espiritual</p>
                     <div class="mt-8 bg-white/50 backdrop-blur-sm rounded-lg p-8 max-w-md mx-auto">
-                        <form id="newsletter-form" class="space-y-4">
-                            <div>
-                                <label for="nome" class="sr-only">Seu nome</label>
-                                <input type="text" id="nome" name="nome" placeholder="Seu nome" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-brand focus:border-transparent transition-all" required>
+                        <div id="consent-step">
+                            <p class="text-lg text-gray-700 mb-6">Você gostaria de receber mensagens de encorajamento ou compartilhar algo conosco?</p>
+                            <div class="flex gap-4 justify-center">
+                                <button id="consent-yes" class="px-8 py-3 bg-brand text-white font-semibold rounded-lg shadow-md hover-bg-brand-dark transition-all duration-300 transform hover:scale-105">
+                                    Sim, gostaria
+                                </button>
+                                <button id="consent-no" class="px-8 py-3 bg-gray-400 text-white font-semibold rounded-lg shadow-md hover:bg-gray-500 transition-all duration-300">
+                                    Não, obrigado
+                                </button>
                             </div>
-                            <div>
-                                <label for="email" class="sr-only">Seu email</label>
-                                <input type="email" id="email" name="email" placeholder="Seu melhor email" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-brand focus:border-transparent transition-all" required>
-                            </div>
-                            <button type="submit" class="w-full px-8 py-3 bg-brand text-white font-semibold rounded-lg shadow-md hover-bg-brand-dark transition-all duration-300 transform hover:scale-105">
-                                Quero me manter conectado ✨
-                            </button>
-                        </form>
-                        <p class="mt-4 text-xs text-gray-500">Respeitamos sua privacidade. Você pode cancelar a qualquer momento.</p>
+                        </div>
+                        <div id="contact-form-step" class="hidden">
+                            <form id="contact-form" class="space-y-4">
+                                <div>
+                                    <label for="nome" class="sr-only">Seu nome</label>
+                                    <input type="text" id="nome" name="nome" placeholder="Seu nome" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-brand focus:border-transparent transition-all" required>
+                                </div>
+                                <div>
+                                    <label for="email" class="sr-only">Seu email</label>
+                                    <input type="email" id="email" name="email" placeholder="Seu email" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-brand focus:border-transparent transition-all" required>
+                                </div>
+                                <div>
+                                    <label for="telefone" class="sr-only">Seu telefone</label>
+                                    <input type="tel" id="telefone" name="telefone" placeholder="Seu telefone (com DDD)" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-brand focus:border-transparent transition-all" required>
+                                </div>
+                                <div>
+                                    <label for="necessidade" class="block text-left text-gray-700 font-semibold mb-2">Como podemos ajudar?</label>
+                                    <select id="necessidade" name="necessidade" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-brand focus:border-transparent transition-all" required>
+                                        <option value="">Selecione uma opção</option>
+                                        <option value="Oração">Oração</option>
+                                        <option value="Ajuda">Ajuda</option>
+                                        <option value="Estudos Bíblicos">Estudos Bíblicos</option>
+                                        <option value="Visita">Visita</option>
+                                        <option value="Outros">Outros</option>
+                                    </select>
+                                </div>
+                                <div id="outros-container" class="hidden">
+                                    <label for="outros-texto" class="sr-only">Descreva sua necessidade</label>
+                                    <textarea id="outros-texto" name="outros-texto" placeholder="Por favor, descreva como podemos ajudá-lo" rows="3" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-brand focus:border-transparent transition-all"></textarea>
+                                </div>
+                                <button type="submit" class="w-full px-8 py-3 bg-brand text-white font-semibold rounded-lg shadow-md hover-bg-brand-dark transition-all duration-300 transform hover:scale-105">
+                                    Enviar 🙏
+                                </button>
+                            </form>
+                        </div>
+                        <div id="success-message" class="hidden text-center py-8">
+                            <div class="text-6xl mb-4">✅</div>
+                            <h3 class="text-2xl font-semibold text-heading mb-2">Recebido com sucesso!</h3>
+                            <p class="text-gray-600">Obrigado por compartilhar conosco. Entraremos em contato em breve.</p>
+                            <p class="mt-4 text-brand font-semibold">Que Deus abençoe sua jornada! 🙏</p>
+                        </div>
+                        <div id="decline-message" class="hidden text-center py-8">
+                            <div class="text-6xl mb-4">🙏</div>
+                            <p class="text-gray-600">Sem problemas! Estamos sempre aqui se precisar de nós.</p>
+                            <p class="mt-4 text-brand font-semibold">Que Deus abençoe você!</p>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -858,25 +883,96 @@
             window.location.href = `mailto:?subject=${encodeURIComponent(assunto)}&body=${encodeURIComponent(corpo)}`;
         }
 
-        // Newsletter Form Handler
-        document.getElementById('newsletter-form')?.addEventListener('submit', (e) => {
+        // Contact Form Handler
+        const consentYes = document.getElementById('consent-yes');
+        const consentNo = document.getElementById('consent-no');
+        const consentStep = document.getElementById('consent-step');
+        const contactFormStep = document.getElementById('contact-form-step');
+        const successMessage = document.getElementById('success-message');
+        const declineMessage = document.getElementById('decline-message');
+        const necessidadeSelect = document.getElementById('necessidade');
+        const outrosContainer = document.getElementById('outros-container');
+
+        consentYes?.addEventListener('click', () => {
+            consentStep.classList.add('hidden');
+            contactFormStep.classList.remove('hidden');
+        });
+
+        consentNo?.addEventListener('click', () => {
+            consentStep.classList.add('hidden');
+            declineMessage.classList.remove('hidden');
+        });
+
+        necessidadeSelect?.addEventListener('change', (e) => {
+            if (e.target.value === 'Outros') {
+                outrosContainer.classList.remove('hidden');
+                document.getElementById('outros-texto').required = true;
+            } else {
+                outrosContainer.classList.add('hidden');
+                document.getElementById('outros-texto').required = false;
+            }
+        });
+
+        document.getElementById('contact-form')?.addEventListener('submit', async (e) => {
             e.preventDefault();
-            const nome = document.getElementById('nome').value;
-            const email = document.getElementById('email').value;
             
-            // For now, show success message. In production, this would send to a backend/email service
-            const form = e.target;
-            form.innerHTML = `
-                <div class="text-center py-8">
-                    <div class="text-6xl mb-4">✅</div>
-                    <h3 class="text-2xl font-semibold text-heading mb-2">Obrigado, ${nome}!</h3>
-                    <p class="text-gray-600">Em breve você receberá mensagens de encorajamento em <strong>${email}</strong></p>
-                    <p class="mt-4 text-brand font-semibold">Que Deus abençoe sua jornada! 🙏</p>
-                </div>
-            `;
-            
-            // Optional: Send to analytics or backend service
-            console.log('Newsletter signup:', { nome, email });
+            const formData = {
+                nome: document.getElementById('nome').value,
+                email: document.getElementById('email').value,
+                telefone: document.getElementById('telefone').value,
+                necessidade: document.getElementById('necessidade').value,
+                outrosTexto: document.getElementById('outros-texto').value || '',
+                dataHora: new Date().toISOString()
+            };
+
+            // Save to local storage as backup
+            const contacts = JSON.parse(localStorage.getItem('jornada-contacts') || '[]');
+            contacts.push(formData);
+            localStorage.setItem('jornada-contacts', JSON.stringify(contacts));
+
+            // Create a GitHub issue with the contact data
+            const issueTitle = `Novo Contato: ${formData.nome} - ${formData.necessidade}`;
+            const issueBody = `
+## Informações de Contato
+
+**Nome:** ${formData.nome}
+**Email:** ${formData.email}
+**Telefone:** ${formData.telefone}
+**Necessidade:** ${formData.necessidade}
+${formData.outrosTexto ? `**Descrição:** ${formData.outrosTexto}` : ''}
+**Data/Hora:** ${new Date(formData.dataHora).toLocaleString('pt-BR')}
+
+---
+_Enviado via formulário do site Jornada da Graça_
+            `.trim();
+
+            try {
+                // Try to create a GitHub issue using GitHub's API
+                // Note: This requires a public repository and will create a public issue
+                const response = await fetch('https://api.github.com/repos/Thigil15/Jornadadagraca/issues', {
+                    method: 'POST',
+                    headers: {
+                        'Accept': 'application/vnd.github.v3+json',
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        title: issueTitle,
+                        body: issueBody,
+                        labels: ['contact-form', formData.necessidade.toLowerCase()]
+                    })
+                });
+
+                if (response.ok) {
+                    console.log('Contato salvo como issue no GitHub');
+                } else {
+                    console.log('Contato salvo localmente:', formData);
+                }
+            } catch (error) {
+                console.log('Contato salvo localmente:', formData);
+            }
+
+            contactFormStep.classList.add('hidden');
+            successMessage.classList.remove('hidden');
         });
     </script>
 

@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin - Contatos Recebidos</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 p-8">
+    <div class="max-w-6xl mx-auto">
+        <div class="bg-white rounded-lg shadow-md p-6 mb-6">
+            <h1 class="text-3xl font-bold text-gray-800 mb-2">Contatos Recebidos</h1>
+            <p class="text-gray-600">Gerenciamento de contatos do site Jornada da Graça</p>
+        </div>
+
+        <div class="bg-white rounded-lg shadow-md p-6 mb-6">
+            <div class="flex gap-4 mb-4">
+                <button onclick="loadContacts()" class="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition-colors">
+                    🔄 Atualizar
+                </button>
+                <button onclick="exportToJSON()" class="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700 transition-colors">
+                    📥 Exportar JSON
+                </button>
+                <button onclick="clearContacts()" class="px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700 transition-colors">
+                    🗑️ Limpar Todos
+                </button>
+            </div>
+            <div id="stats" class="text-gray-700 font-semibold"></div>
+        </div>
+
+        <div id="contacts-container" class="space-y-4">
+            <!-- Contacts will be loaded here -->
+        </div>
+
+        <div id="no-contacts" class="bg-white rounded-lg shadow-md p-12 text-center hidden">
+            <div class="text-6xl mb-4">📭</div>
+            <h2 class="text-2xl font-semibold text-gray-700 mb-2">Nenhum contato recebido ainda</h2>
+            <p class="text-gray-500">Os contatos enviados pelo formulário aparecerão aqui</p>
+        </div>
+    </div>
+
+    <script>
+        function loadContacts() {
+            const contacts = JSON.parse(localStorage.getItem('jornada-contacts') || '[]');
+            const container = document.getElementById('contacts-container');
+            const noContacts = document.getElementById('no-contacts');
+            const stats = document.getElementById('stats');
+
+            if (contacts.length === 0) {
+                container.innerHTML = '';
+                noContacts.classList.remove('hidden');
+                stats.textContent = '';
+                return;
+            }
+
+            noContacts.classList.add('hidden');
+            stats.textContent = `Total de contatos: ${contacts.length}`;
+
+            // Sort by date, most recent first
+            contacts.sort((a, b) => new Date(b.dataHora) - new Date(a.dataHora));
+
+            container.innerHTML = contacts.map((contact, index) => `
+                <div class="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow">
+                    <div class="flex justify-between items-start mb-4">
+                        <div>
+                            <h3 class="text-xl font-bold text-gray-800">${contact.nome}</h3>
+                            <p class="text-sm text-gray-500">${new Date(contact.dataHora).toLocaleString('pt-BR')}</p>
+                        </div>
+                        <span class="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm font-semibold">
+                            ${contact.necessidade}
+                        </span>
+                    </div>
+                    <div class="grid md:grid-cols-2 gap-4 mb-4">
+                        <div>
+                            <p class="text-sm text-gray-500">Email</p>
+                            <p class="font-semibold text-gray-700">
+                                <a href="mailto:${contact.email}" class="text-blue-600 hover:underline">${contact.email}</a>
+                            </p>
+                        </div>
+                        <div>
+                            <p class="text-sm text-gray-500">Telefone</p>
+                            <p class="font-semibold text-gray-700">
+                                <a href="tel:${contact.telefone}" class="text-blue-600 hover:underline">${contact.telefone}</a>
+                            </p>
+                        </div>
+                    </div>
+                    ${contact.outrosTexto ? `
+                        <div class="mt-4 p-4 bg-gray-50 rounded border-l-4 border-blue-500">
+                            <p class="text-sm text-gray-500 mb-1">Descrição adicional:</p>
+                            <p class="text-gray-700">${contact.outrosTexto}</p>
+                        </div>
+                    ` : ''}
+                    <div class="mt-4 flex gap-2">
+                        <button onclick="deleteContact(${index})" class="text-sm px-3 py-1 bg-red-100 text-red-700 rounded hover:bg-red-200 transition-colors">
+                            Excluir
+                        </button>
+                        <button onclick="copyContact(${index})" class="text-sm px-3 py-1 bg-gray-100 text-gray-700 rounded hover:bg-gray-200 transition-colors">
+                            Copiar dados
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function exportToJSON() {
+            const contacts = JSON.parse(localStorage.getItem('jornada-contacts') || '[]');
+            if (contacts.length === 0) {
+                alert('Nenhum contato para exportar');
+                return;
+            }
+
+            const dataStr = JSON.stringify(contacts, null, 2);
+            const dataBlob = new Blob([dataStr], { type: 'application/json' });
+            const url = URL.createObjectURL(dataBlob);
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = `contatos-jornada-${new Date().toISOString().split('T')[0]}.json`;
+            link.click();
+            URL.revokeObjectURL(url);
+        }
+
+        function clearContacts() {
+            if (confirm('Tem certeza que deseja excluir TODOS os contatos? Esta ação não pode ser desfeita.')) {
+                if (confirm('ATENÇÃO: Isso irá apagar permanentemente todos os contatos. Deseja exportar antes?')) {
+                    exportToJSON();
+                }
+                localStorage.removeItem('jornada-contacts');
+                loadContacts();
+            }
+        }
+
+        function deleteContact(index) {
+            if (confirm('Deseja excluir este contato?')) {
+                const contacts = JSON.parse(localStorage.getItem('jornada-contacts') || '[]');
+                contacts.splice(index, 1);
+                localStorage.setItem('jornada-contacts', JSON.stringify(contacts));
+                loadContacts();
+            }
+        }
+
+        function copyContact(index) {
+            const contacts = JSON.parse(localStorage.getItem('jornada-contacts') || '[]');
+            const contact = contacts[index];
+            const text = `Nome: ${contact.nome}\nEmail: ${contact.email}\nTelefone: ${contact.telefone}\nNecessidade: ${contact.necessidade}\n${contact.outrosTexto ? 'Descrição: ' + contact.outrosTexto : ''}`;
+            navigator.clipboard.writeText(text).then(() => {
+                alert('Dados copiados para a área de transferência!');
+            });
+        }
+
+        // Auto-refresh every 30 seconds
+        setInterval(loadContacts, 30000);
+
+        // Load on page load
+        loadContacts();
+    </script>
+</body>
+</html>
