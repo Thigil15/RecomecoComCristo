@@ -199,58 +199,7 @@
             background: rgba(179, 139, 109, 1);
         }
 
-        /* Dark Mode Toggle */
-        .dark-mode-toggle {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.9);
-            backdrop-filter: blur(10px);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            z-index: 100;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-        }
-        .dark-mode-toggle:hover {
-            transform: scale(1.1);
-        }
 
-        /* Dark Mode Styles */
-        body.dark-mode {
-            background: linear-gradient(135deg, #0f0f0f, #1a1a1a, #0f0f0f);
-            color: #e8e8e8;
-        }
-        body.dark-mode .text-heading { color: #f5f5f5; }
-        body.dark-mode .text-gray-600 { color: #c0c0c0; }
-        body.dark-mode .text-gray-700 { color: #d0d0d0; }
-        body.dark-mode .text-gray-500 { color: #a8a8a8; }
-        body.dark-mode .bg-white { background-color: #242424; }
-        body.dark-mode .bg-accent-fixed { background-color: #1a1a1a; }
-        body.dark-mode .border-gray-200 { border-color: #3a3a3a; }
-        body.dark-mode .border-gray-300 { border-color: #4a4a4a; }
-        body.dark-mode .shadow-sm { box-shadow: 0 1px 3px rgba(0,0,0,0.5); }
-        body.dark-mode footer { background-color: #0f0f0f; border-top: 1px solid #2a2a2a; }
-        body.dark-mode input,
-        body.dark-mode select,
-        body.dark-mode textarea { 
-            background-color: #2a2a2a; 
-            color: #e8e8e8; 
-            border-color: #3a3a3a;
-        }
-        body.dark-mode input::placeholder { color: #888; }
-        body.dark-mode .dark-mode-toggle {
-            background: rgba(30, 30, 30, 0.95);
-        }
-        body.dark-mode .card-tilt:hover,
-        body.dark-mode .gallery-card:hover {
-            box-shadow: 0px 30px 50px -20px rgba(0, 0, 0, 0.7);
-        }
         
         /* Scroll behavior improvements */
         @media (prefers-reduced-motion: reduce) {
@@ -288,10 +237,7 @@
 </head>
 <body class="antialiased">
 
-    <!-- Dark Mode Toggle -->
-    <button id="dark-mode-toggle" class="dark-mode-toggle" aria-label="Alternar modo escuro" title="Alternar modo escuro">
-        <span id="dark-mode-icon" style="font-size: 24px;">🌙</span>
-    </button>
+
 
     <!-- Back to Top Button -->
     <button id="back-to-top" class="back-to-top" aria-label="Voltar ao topo" title="Voltar ao topo">
@@ -360,12 +306,12 @@
             <div class="container mx-auto px-6 max-w-4xl relative z-10">
                 <div class="fade-in-on-scroll text-center">
                     <div class="inline-block px-4 py-2 bg-brand/20 rounded-full text-brand font-semibold text-sm mb-4">
-                        📖 Versículo de Reflexão
+                        📖 Versículo do Dia
                     </div>
-                    <blockquote class="text-2xl sm:text-3xl font-serif text-heading leading-relaxed italic">
+                    <blockquote id="daily-verse-text" class="text-2xl sm:text-3xl font-serif text-heading leading-relaxed italic">
                         "Porque Deus amou o mundo de tal maneira que deu o seu Filho unigênito, para que todo aquele que nele crê não pereça, mas tenha a vida eterna."
                     </blockquote>
-                    <cite class="mt-6 block text-lg font-semibold not-italic text-brand">João 3:16</cite>
+                    <cite id="daily-verse-reference" class="mt-6 block text-lg font-semibold not-italic text-brand">João 3:16</cite>
                 </div>
             </div>
         </section>
@@ -491,43 +437,41 @@
         <section id="testemunhos" class="py-20 sm:py-24 md:py-32">
             <div class="container mx-auto px-6 max-w-6xl relative z-10">
                 <div class="text-center fade-in-on-scroll">
-                    <h2 class="text-3xl sm:text-4xl font-bold text-heading">Vidas Transformadas</h2>
-                    <p class="mt-4 text-lg text-gray-600">Conheça histórias reais de pessoas que experimentaram a graça de Cristo</p>
+                    <h2 class="text-3xl sm:text-4xl font-bold text-heading">Compartilhe seu Testemunho</h2>
+                    <p class="mt-4 text-lg text-gray-600">Deixe seu testemunho de como a graça de Cristo transformou sua vida</p>
                 </div>
-                <div class="mt-16 grid md:grid-cols-3 gap-8">
-                    <div class="fade-in-on-scroll bg-white rounded-lg shadow-sm p-8 border border-gray-200 hover:shadow-xl transition-all duration-300">
-                        <div class="flex items-center mb-4">
-                            <div class="w-12 h-12 rounded-full bg-brand/20 flex items-center justify-center text-2xl">👤</div>
-                            <div class="ml-4">
-                                <h3 class="font-semibold text-heading">Maria Silva</h3>
-                                <p class="text-sm text-gray-500">São Paulo, SP</p>
-                            </div>
+
+                <!-- Comment Form -->
+                <div class="mt-12 max-w-2xl mx-auto bg-white rounded-lg shadow-sm p-8 border border-gray-200">
+                    <form id="comment-form" class="space-y-4">
+                        <div>
+                            <label for="comment-name" class="block text-gray-700 font-semibold mb-2">Seu nome</label>
+                            <input type="text" id="comment-name" name="name" placeholder="Digite seu nome" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-brand focus:border-transparent transition-all" required>
                         </div>
-                        <p class="text-gray-600 italic">"Eu vivia sobrecarregada pela culpa do passado. Quando descobri a graça de Cristo, foi como se um peso imenso saísse dos meus ombros. Hoje vivo em liberdade e paz."</p>
-                        <div class="mt-4 text-brand text-2xl">⭐⭐⭐⭐⭐</div>
-                    </div>
-                    <div class="fade-in-on-scroll bg-white rounded-lg shadow-sm p-8 border border-gray-200 hover:shadow-xl transition-all duration-300" style="transition-delay: 100ms;">
-                        <div class="flex items-center mb-4">
-                            <div class="w-12 h-12 rounded-full bg-brand/20 flex items-center justify-center text-2xl">👤</div>
-                            <div class="ml-4">
-                                <h3 class="font-semibold text-heading">João Santos</h3>
-                                <p class="text-sm text-gray-500">Rio de Janeiro, RJ</p>
-                            </div>
+                        <div>
+                            <label for="comment-location" class="block text-gray-700 font-semibold mb-2">Sua cidade/estado</label>
+                            <input type="text" id="comment-location" name="location" placeholder="Ex: São Paulo, SP" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-brand focus:border-transparent transition-all" required>
                         </div>
-                        <p class="text-gray-600 italic">"Eu estava perdido nas drogas e na depressão. Esta mensagem sobre recomeçar me deu esperança. Hoje sou uma nova pessoa, reconciliado com Deus e com minha família."</p>
-                        <div class="mt-4 text-brand text-2xl">⭐⭐⭐⭐⭐</div>
-                    </div>
-                    <div class="fade-in-on-scroll bg-white rounded-lg shadow-sm p-8 border border-gray-200 hover:shadow-xl transition-all duration-300" style="transition-delay: 200ms;">
-                        <div class="flex items-center mb-4">
-                            <div class="w-12 h-12 rounded-full bg-brand/20 flex items-center justify-center text-2xl">👤</div>
-                            <div class="ml-4">
-                                <h3 class="font-semibold text-heading">Ana Costa</h3>
-                                <p class="text-sm text-gray-500">Belo Horizonte, MG</p>
-                            </div>
+                        <div>
+                            <label for="comment-text" class="block text-gray-700 font-semibold mb-2">Seu testemunho</label>
+                            <textarea id="comment-text" name="text" placeholder="Compartilhe como a graça de Cristo transformou sua vida..." rows="4" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-brand focus:border-transparent transition-all" required></textarea>
                         </div>
-                        <p class="text-gray-600 italic">"Sempre achei que religião era sobre regras. Quando entendi que é sobre relacionamento e graça, minha vida mudou completamente. Agora tenho propósito e alegria verdadeira."</p>
-                        <div class="mt-4 text-brand text-2xl">⭐⭐⭐⭐⭐</div>
+                        <button type="submit" class="w-full px-8 py-3 bg-brand text-white font-semibold rounded-lg shadow-md hover-bg-brand-dark transition-all duration-300 transform hover:scale-105">
+                            Enviar Testemunho 🙏
+                        </button>
+                    </form>
+                    <div id="comment-success" class="hidden mt-6 p-4 bg-green-100 text-green-800 rounded-lg text-center">
+                        <p class="font-semibold">✅ Testemunho enviado com sucesso!</p>
+                        <p class="text-sm mt-2">Seu testemunho será revisado e publicado em breve.</p>
                     </div>
+                </div>
+
+                <!-- Display Approved Comments -->
+                <div id="comments-container" class="mt-16 grid md:grid-cols-3 gap-8">
+                    <!-- Approved comments will be loaded here -->
+                </div>
+                <div id="no-comments" class="mt-16 text-center text-gray-500">
+                    <p>Nenhum testemunho publicado ainda. Seja o primeiro a compartilhar!</p>
                 </div>
             </div>
         </section>
@@ -763,7 +707,17 @@
                 });
             });
 
-            const prayerText = `"Deus, eu reconheço meus erros e o quanto preciso de Ti. Creio que Jesus é a resposta e o único caminho. Eu aceito o Teu perdão e a Tua graça. Entra na minha vida e me ensina a viver este recomeço. Em Nome do Senhor Jesus, Amém."`;
+            // Random prayers pool based on repentance, belief, and obedience
+            const prayers = [
+                `"Senhor, reconheço que sou pecador e preciso do Teu perdão. Me arrependo dos meus erros e creio que Jesus Cristo morreu por mim. Recebo Tua graça e me comprometo a obedecer Tua Palavra. Em nome de Jesus, Amém."`,
+                `"Pai celestial, confesso meus pecados e me arrependo de coração. Creio que Jesus é meu Salvador e Senhor. Ajuda-me a obedecer Teus mandamentos e viver uma vida que Te agrade. Amém."`,
+                `"Deus, eu reconheço meus erros e o quanto preciso de Ti. Creio que Jesus é a resposta e o único caminho. Eu aceito o Teu perdão e a Tua graça. Entra na minha vida e me ensina a viver este recomeço. Em Nome do Senhor Jesus, Amém."`,
+                `"Senhor Jesus, me arrependo sinceramente dos meus pecados. Creio que Tu morreste na cruz e ressuscitaste para me dar vida nova. Ajuda-me a Te obedecer e seguir Teus caminhos todos os dias da minha vida. Amém."`,
+                `"Pai, reconheço que me afastei de Ti. Me arrependo e volto para Teus braços. Creio em Jesus Cristo como meu único Salvador. Ensina-me a obedecer Tua vontade e a viver segundo Tua Palavra. Em nome de Jesus, Amém."`,
+                `"Senhor, confesso que pequei contra Ti. Me arrependo de todo o coração. Creio que Jesus pagou o preço pelos meus pecados. Ajuda-me a obedecer Teus ensinamentos e a glorificar Teu nome. Amém."`
+            ];
+            
+            const prayerText = prayers[Math.floor(Math.random() * prayers.length)];
             prayButton.addEventListener('click', () => {
                 prayButton.style.display = 'none';
                 prayerContainer.classList.remove('hidden');
@@ -806,21 +760,89 @@
             }, { threshold: 0.5 });
             sections.forEach(section => navObserver.observe(section));
 
-            // Dark Mode Toggle
-            const darkModeToggle = document.getElementById('dark-mode-toggle');
-            const darkModeIcon = document.getElementById('dark-mode-icon');
-            const isDarkMode = localStorage.getItem('darkMode') === 'true';
-            
-            if (isDarkMode) {
-                document.body.classList.add('dark-mode');
-                darkModeIcon.textContent = '☀️';
+            // Fetch Daily Verse
+            async function fetchDailyVerse() {
+                try {
+                    // Fallback verses from different parts of the Bible
+                    const fallbackVerses = [
+                        { text: "Porque Deus amou o mundo de tal maneira que deu o seu Filho unigênito, para que todo aquele que nele crê não pereça, mas tenha a vida eterna.", reference: "João 3:16" },
+                        { text: "Pois pela graça vocês são salvos, por meio da fé, e isto não vem de vocês, é dom de Deus; não por obras, para que ninguém se glorie.", reference: "Efésios 2:8-9" },
+                        { text: "Portanto, se alguém está em Cristo, é nova criação. As coisas antigas já passaram; eis que surgiram coisas novas!", reference: "2 Coríntios 5:17" },
+                        { text: "Eis que estou à porta e bato; se alguém ouvir a minha voz e abrir a porta, entrarei em sua casa e com ele cearei, e ele comigo.", reference: "Apocalipse 3:20" },
+                        { text: "Vinde a mim, todos os que estais cansados e oprimidos, e eu vos aliviarei.", reference: "Mateus 11:28" },
+                        { text: "O Senhor é o meu pastor; nada me faltará.", reference: "Salmos 23:1" },
+                        { text: "Entrega o teu caminho ao Senhor; confia nele, e ele o fará.", reference: "Salmos 37:5" },
+                        { text: "Mas os que esperam no Senhor renovarão as suas forças; subirão com asas como águias; correrão, e não se cansarão; caminharão, e não se fatigarão.", reference: "Isaías 40:31" }
+                    ];
+                    
+                    // Get day of year to rotate verses consistently per day
+                    const now = new Date();
+                    const start = new Date(now.getFullYear(), 0, 0);
+                    const diff = now - start;
+                    const oneDay = 1000 * 60 * 60 * 24;
+                    const dayOfYear = Math.floor(diff / oneDay);
+                    
+                    const selectedVerse = fallbackVerses[dayOfYear % fallbackVerses.length];
+                    document.getElementById('daily-verse-text').textContent = `"${selectedVerse.text}"`;
+                    document.getElementById('daily-verse-reference').textContent = selectedVerse.reference;
+                } catch (error) {
+                    console.log('Usando versículo padrão');
+                }
             }
+            fetchDailyVerse();
 
-            darkModeToggle.addEventListener('click', () => {
-                document.body.classList.toggle('dark-mode');
-                const isDark = document.body.classList.contains('dark-mode');
-                darkModeIcon.textContent = isDark ? '☀️' : '🌙';
-                localStorage.setItem('darkMode', isDark);
+            // Load and display approved comments
+            function loadComments() {
+                const comments = JSON.parse(localStorage.getItem('jornada-comments') || '[]');
+                const approvedComments = comments.filter(c => c.approved === true);
+                const container = document.getElementById('comments-container');
+                const noComments = document.getElementById('no-comments');
+                
+                if (approvedComments.length === 0) {
+                    container.innerHTML = '';
+                    noComments.style.display = 'block';
+                    return;
+                }
+                
+                noComments.style.display = 'none';
+                container.innerHTML = approvedComments.map((comment, index) => `
+                    <div class="fade-in-on-scroll bg-white rounded-lg shadow-sm p-8 border border-gray-200 hover:shadow-xl transition-all duration-300" style="transition-delay: ${index * 100}ms;">
+                        <div class="flex items-center mb-4">
+                            <div class="w-12 h-12 rounded-full bg-brand/20 flex items-center justify-center text-2xl">👤</div>
+                            <div class="ml-4">
+                                <h3 class="font-semibold text-heading">${comment.name}</h3>
+                                <p class="text-sm text-gray-500">${comment.location}</p>
+                            </div>
+                        </div>
+                        <p class="text-gray-600 italic">"${comment.text}"</p>
+                        <div class="mt-4 text-brand text-2xl">⭐⭐⭐⭐⭐</div>
+                    </div>
+                `).join('');
+            }
+            loadComments();
+
+            // Comment form handler
+            document.getElementById('comment-form')?.addEventListener('submit', (e) => {
+                e.preventDefault();
+                
+                const commentData = {
+                    name: document.getElementById('comment-name').value,
+                    location: document.getElementById('comment-location').value,
+                    text: document.getElementById('comment-text').value,
+                    approved: false,
+                    dataHora: new Date().toISOString()
+                };
+                
+                const comments = JSON.parse(localStorage.getItem('jornada-comments') || '[]');
+                comments.push(commentData);
+                localStorage.setItem('jornada-comments', JSON.stringify(comments));
+                
+                document.getElementById('comment-form').reset();
+                document.getElementById('comment-success').classList.remove('hidden');
+                
+                setTimeout(() => {
+                    document.getElementById('comment-success').classList.add('hidden');
+                }, 5000);
             });
 
             // Skip link for accessibility
