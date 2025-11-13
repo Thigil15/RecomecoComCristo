@@ -312,6 +312,7 @@
                         "Porque Deus amou o mundo de tal maneira que deu o seu Filho unigênito, para que todo aquele que nele crê não pereça, mas tenha a vida eterna."
                     </blockquote>
                     <cite id="daily-verse-reference" class="mt-6 block text-lg font-semibold not-italic text-brand">João 3:16</cite>
+                    <p id="daily-verse-message" class="mt-4 text-base text-gray-600 max-w-2xl mx-auto">O amor incondicional de Deus se manifesta através do sacrifício de Jesus, oferecendo salvação a todos que creem.</p>
                 </div>
             </div>
         </section>
@@ -760,20 +761,20 @@
             }, { threshold: 0.5 });
             sections.forEach(section => navObserver.observe(section));
 
-            // Fetch Daily Verse
+            // Fetch Daily Verse from JSON database
             async function fetchDailyVerse() {
                 try {
-                    // Fallback verses from different parts of the Bible
-                    const fallbackVerses = [
-                        { text: "Porque Deus amou o mundo de tal maneira que deu o seu Filho unigênito, para que todo aquele que nele crê não pereça, mas tenha a vida eterna.", reference: "João 3:16" },
-                        { text: "Pois pela graça vocês são salvos, por meio da fé, e isto não vem de vocês, é dom de Deus; não por obras, para que ninguém se glorie.", reference: "Efésios 2:8-9" },
-                        { text: "Portanto, se alguém está em Cristo, é nova criação. As coisas antigas já passaram; eis que surgiram coisas novas!", reference: "2 Coríntios 5:17" },
-                        { text: "Eis que estou à porta e bato; se alguém ouvir a minha voz e abrir a porta, entrarei em sua casa e com ele cearei, e ele comigo.", reference: "Apocalipse 3:20" },
-                        { text: "Vinde a mim, todos os que estais cansados e oprimidos, e eu vos aliviarei.", reference: "Mateus 11:28" },
-                        { text: "O Senhor é o meu pastor; nada me faltará.", reference: "Salmos 23:1" },
-                        { text: "Entrega o teu caminho ao Senhor; confia nele, e ele o fará.", reference: "Salmos 37:5" },
-                        { text: "Mas os que esperam no Senhor renovarão as suas forças; subirão com asas como águias; correrão, e não se cansarão; caminharão, e não se fatigarão.", reference: "Isaías 40:31" }
-                    ];
+                    // Check if there are local edits first
+                    const localVerses = localStorage.getItem('jornada-verses-local');
+                    let verses;
+                    
+                    if (localVerses) {
+                        verses = JSON.parse(localVerses);
+                    } else {
+                        // Load verses from external JSON file
+                        const response = await fetch('versiculos.json');
+                        verses = await response.json();
+                    }
                     
                     // Get day of year to rotate verses consistently per day
                     const now = new Date();
@@ -782,11 +783,16 @@
                     const oneDay = 1000 * 60 * 60 * 24;
                     const dayOfYear = Math.floor(diff / oneDay);
                     
-                    const selectedVerse = fallbackVerses[dayOfYear % fallbackVerses.length];
+                    // Select verse based on day of year
+                    const selectedVerse = verses[dayOfYear % verses.length];
+                    
+                    // Update DOM with verse, reference, and message
                     document.getElementById('daily-verse-text').textContent = `"${selectedVerse.text}"`;
                     document.getElementById('daily-verse-reference').textContent = selectedVerse.reference;
+                    document.getElementById('daily-verse-message').textContent = selectedVerse.message;
                 } catch (error) {
-                    console.log('Usando versículo padrão');
+                    console.log('Erro ao carregar versículos, usando versículo padrão');
+                    // Fallback to default verse if JSON fails to load
                 }
             }
             fetchDailyVerse();
