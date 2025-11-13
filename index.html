@@ -196,6 +196,36 @@
             50% { box-shadow: 0 4px 30px rgba(179, 139, 109, 0.8); }
         }
 
+        /* Back to Top Button */
+        .back-to-top {
+            position: fixed;
+            bottom: 90px;
+            right: 20px;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: rgba(179, 139, 109, 0.9);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            z-index: 99;
+            opacity: 0;
+            pointer-events: none;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+        }
+        .back-to-top.visible {
+            opacity: 1;
+            pointer-events: all;
+        }
+        .back-to-top:hover {
+            transform: translateY(-3px);
+            background: rgba(179, 139, 109, 1);
+        }
+
         /* Dark Mode Toggle */
         .dark-mode-toggle {
             position: fixed;
@@ -230,8 +260,43 @@
         body.dark-mode .bg-white { background-color: #2d2d2d; }
         body.dark-mode .bg-accent-fixed { background-color: #252525; }
         body.dark-mode .border-gray-200 { border-color: #404040; }
+        body.dark-mode .border-gray-300 { border-color: #505050; }
         body.dark-mode .shadow-sm { box-shadow: 0 1px 3px rgba(0,0,0,0.3); }
         body.dark-mode footer { background-color: #1a1a1a; }
+        body.dark-mode input { background-color: #2d2d2d; color: #e0e0e0; }
+        body.dark-mode input::placeholder { color: #888; }
+        
+        /* Scroll behavior improvements */
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+
+        /* Screen reader only */
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border-width: 0;
+        }
+        .focus\:not-sr-only:focus {
+            position: static;
+            width: auto;
+            height: auto;
+            padding: 0.5rem 1rem;
+            margin: 0;
+            overflow: visible;
+            clip: auto;
+            white-space: normal;
+        }
 
     </style>
 </head>
@@ -240,6 +305,11 @@
     <!-- Dark Mode Toggle -->
     <button id="dark-mode-toggle" class="dark-mode-toggle" aria-label="Alternar modo escuro" title="Alternar modo escuro">
         <span id="dark-mode-icon" style="font-size: 24px;">🌙</span>
+    </button>
+
+    <!-- Back to Top Button -->
+    <button id="back-to-top" class="back-to-top" aria-label="Voltar ao topo" title="Voltar ao topo">
+        <span>↑</span>
     </button>
 
     <!-- Floating Action Button -->
@@ -299,6 +369,20 @@
                         </div>
                     </div>
                     <p id="dilema-revelation" class="mt-12 text-lg text-brand font-semibold opacity-0 transition-opacity duration-1000">Esses pesos parecem permanentes... mas existe uma força maior que todos eles.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="versiculo" class="py-16 sm:py-20 bg-gradient-to-r from-brand/10 to-brand/5">
+            <div class="container mx-auto px-6 max-w-4xl relative z-10">
+                <div class="fade-in-on-scroll text-center">
+                    <div class="inline-block px-4 py-2 bg-brand/20 rounded-full text-brand font-semibold text-sm mb-4">
+                        📖 Versículo de Reflexão
+                    </div>
+                    <blockquote class="text-2xl sm:text-3xl font-serif text-heading leading-relaxed italic">
+                        "Porque Deus amou o mundo de tal maneira que deu o seu Filho unigênito, para que todo aquele que nele crê não pereça, mas tenha a vida eterna."
+                    </blockquote>
+                    <cite class="mt-6 block text-lg font-semibold not-italic text-brand">João 3:16</cite>
                 </div>
             </div>
         </section>
@@ -421,6 +505,50 @@
             </div>
         </section>
         
+        <section id="testemunhos" class="py-20 sm:py-24 md:py-32">
+            <div class="container mx-auto px-6 max-w-6xl relative z-10">
+                <div class="text-center fade-in-on-scroll">
+                    <h2 class="text-3xl sm:text-4xl font-bold text-heading">Vidas Transformadas</h2>
+                    <p class="mt-4 text-lg text-gray-600">Conheça histórias reais de pessoas que experimentaram a graça de Cristo</p>
+                </div>
+                <div class="mt-16 grid md:grid-cols-3 gap-8">
+                    <div class="fade-in-on-scroll bg-white rounded-lg shadow-sm p-8 border border-gray-200 hover:shadow-xl transition-all duration-300">
+                        <div class="flex items-center mb-4">
+                            <div class="w-12 h-12 rounded-full bg-brand/20 flex items-center justify-center text-2xl">👤</div>
+                            <div class="ml-4">
+                                <h3 class="font-semibold text-heading">Maria Silva</h3>
+                                <p class="text-sm text-gray-500">São Paulo, SP</p>
+                            </div>
+                        </div>
+                        <p class="text-gray-600 italic">"Eu vivia sobrecarregada pela culpa do passado. Quando descobri a graça de Cristo, foi como se um peso imenso saísse dos meus ombros. Hoje vivo em liberdade e paz."</p>
+                        <div class="mt-4 text-brand text-2xl">⭐⭐⭐⭐⭐</div>
+                    </div>
+                    <div class="fade-in-on-scroll bg-white rounded-lg shadow-sm p-8 border border-gray-200 hover:shadow-xl transition-all duration-300" style="transition-delay: 100ms;">
+                        <div class="flex items-center mb-4">
+                            <div class="w-12 h-12 rounded-full bg-brand/20 flex items-center justify-center text-2xl">👤</div>
+                            <div class="ml-4">
+                                <h3 class="font-semibold text-heading">João Santos</h3>
+                                <p class="text-sm text-gray-500">Rio de Janeiro, RJ</p>
+                            </div>
+                        </div>
+                        <p class="text-gray-600 italic">"Eu estava perdido nas drogas e na depressão. Esta mensagem sobre recomeçar me deu esperança. Hoje sou uma nova pessoa, reconciliado com Deus e com minha família."</p>
+                        <div class="mt-4 text-brand text-2xl">⭐⭐⭐⭐⭐</div>
+                    </div>
+                    <div class="fade-in-on-scroll bg-white rounded-lg shadow-sm p-8 border border-gray-200 hover:shadow-xl transition-all duration-300" style="transition-delay: 200ms;">
+                        <div class="flex items-center mb-4">
+                            <div class="w-12 h-12 rounded-full bg-brand/20 flex items-center justify-center text-2xl">👤</div>
+                            <div class="ml-4">
+                                <h3 class="font-semibold text-heading">Ana Costa</h3>
+                                <p class="text-sm text-gray-500">Belo Horizonte, MG</p>
+                            </div>
+                        </div>
+                        <p class="text-gray-600 italic">"Sempre achei que religião era sobre regras. Quando entendi que é sobre relacionamento e graça, minha vida mudou completamente. Agora tenho propósito e alegria verdadeira."</p>
+                        <div class="mt-4 text-brand text-2xl">⭐⭐⭐⭐⭐</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
         <section id="recursos" class="py-20 sm:py-24 md:py-32 bg-accent-fixed">
             <div class="container mx-auto px-6 max-w-5xl relative z-10">
                 <div class="text-center fade-in-on-scroll">
@@ -471,6 +599,31 @@
                         <button onclick="compartilharEmail()" class="share-button share-email" aria-label="Compartilhar por Email" title="Compartilhar por Email">
                             <svg width="24" height="24" fill="currentColor" viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
                         </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="acompanhamento" class="py-20 sm:py-24 bg-accent-fixed">
+            <div class="container mx-auto px-6 max-w-3xl text-center relative z-10">
+                <div class="fade-in-on-scroll">
+                    <h2 class="text-3xl sm:text-4xl font-bold text-heading">Continue Conectado</h2>
+                    <p class="mt-4 text-lg text-gray-600">Deixe seu contato para receber mensagens de encorajamento e recursos para sua jornada espiritual</p>
+                    <div class="mt-8 bg-white/50 backdrop-blur-sm rounded-lg p-8 max-w-md mx-auto">
+                        <form id="newsletter-form" class="space-y-4">
+                            <div>
+                                <label for="nome" class="sr-only">Seu nome</label>
+                                <input type="text" id="nome" name="nome" placeholder="Seu nome" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-brand focus:border-transparent transition-all" required>
+                            </div>
+                            <div>
+                                <label for="email" class="sr-only">Seu email</label>
+                                <input type="email" id="email" name="email" placeholder="Seu melhor email" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-brand focus:border-transparent transition-all" required>
+                            </div>
+                            <button type="submit" class="w-full px-8 py-3 bg-brand text-white font-semibold rounded-lg shadow-md hover-bg-brand-dark transition-all duration-300 transform hover:scale-105">
+                                Quero me manter conectado ✨
+                            </button>
+                        </form>
+                        <p class="mt-4 text-xs text-gray-500">Respeitamos sua privacidade. Você pode cancelar a qualquer momento.</p>
                     </div>
                 </div>
             </div>
@@ -651,6 +804,19 @@
             skipLink.textContent = 'Pular para o conteúdo principal';
             skipLink.className = 'sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:bg-brand focus:text-white focus:px-4 focus:py-2 focus:rounded';
             document.body.insertBefore(skipLink, document.body.firstChild);
+
+            // Back to Top Button
+            const backToTopButton = document.getElementById('back-to-top');
+            window.addEventListener('scroll', () => {
+                if (window.pageYOffset > 300) {
+                    backToTopButton.classList.add('visible');
+                } else {
+                    backToTopButton.classList.remove('visible');
+                }
+            });
+            backToTopButton.addEventListener('click', () => {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
         });
 
         // Register Service Worker for PWA
@@ -691,6 +857,27 @@
             const corpo = 'Olá!\n\nQuero compartilhar com você esta jornada espiritual sobre graça, perdão e recomeço.\n\nÉ uma experiência interativa muito especial que pode transformar sua perspectiva sobre a vida.\n\nAcesse: ' + window.location.href + '\n\nCom carinho, espero que essa mensagem toque seu coração! 🙏✨';
             window.location.href = `mailto:?subject=${encodeURIComponent(assunto)}&body=${encodeURIComponent(corpo)}`;
         }
+
+        // Newsletter Form Handler
+        document.getElementById('newsletter-form')?.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const nome = document.getElementById('nome').value;
+            const email = document.getElementById('email').value;
+            
+            // For now, show success message. In production, this would send to a backend/email service
+            const form = e.target;
+            form.innerHTML = `
+                <div class="text-center py-8">
+                    <div class="text-6xl mb-4">✅</div>
+                    <h3 class="text-2xl font-semibold text-heading mb-2">Obrigado, ${nome}!</h3>
+                    <p class="text-gray-600">Em breve você receberá mensagens de encorajamento em <strong>${email}</strong></p>
+                    <p class="mt-4 text-brand font-semibold">Que Deus abençoe sua jornada! 🙏</p>
+                </div>
+            `;
+            
+            // Optional: Send to analytics or backend service
+            console.log('Newsletter signup:', { nome, email });
+        });
     </script>
 
 </body>
