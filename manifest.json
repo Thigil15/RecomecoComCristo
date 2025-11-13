@@ -1,0 +1,26 @@
+{
+  "name": "Jornada da Graça - Recomeço com Cristo",
+  "short_name": "Jornada da Graça",
+  "description": "Uma jornada espiritual interativa sobre graça, perdão e recomeço com Cristo",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#FDFBF8",
+  "theme_color": "#B38B6D",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' fill='%23B38B6D'/><text x='50' y='70' font-size='60' text-anchor='middle' fill='white'>✨</text></svg>",
+      "sizes": "192x192",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' fill='%23B38B6D'/><text x='50' y='70' font-size='60' text-anchor='middle' fill='white'>✨</text></svg>",
+      "sizes": "512x512",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["lifestyle", "education"],
+  "lang": "pt-BR"
+}
